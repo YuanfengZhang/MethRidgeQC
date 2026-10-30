@@ -1,0 +1,44 @@
+[workspace]
+name = 'MethRidgeQC'
+version = '0.1.0'
+channels = ['conda-forge', 'bioconda']
+platforms = ['linux-64']
+
+[dependencies]
+python = '3.13.*'
+numpy = '*'
+scipy = '*'
+polars = '*'
+pyarrow = '*'
+scikit-learn = '*'
+joblib = '*'
+pyfaidx = '*'
+setuptools = '>=77.0.3'
+pytest = '*'
+
+[pypi-dependencies]
+methridgeqc = { path = '.', editable = true }
+
+[feature.gpu]
+channels = ['rapidsai', 'conda-forge', 'nvidia']
+
+[feature.gpu.dependencies]
+cuda-version = '13.*'
+cuml = '26.10.*'
+cupy = '*'
+rmm = '26.10.*'
+
+[feature.gpu.system-requirements]
+cuda = '13'
+
+[feature.gpu.tasks]
+test = 'env METHRIDGEQC_TEST_GPU=1 CUDA_PATH="$CONDA_PREFIX/targets/x86_64-linux" python -m pytest'
+
+[environments]
+default = { features = [] }
+gpu = { features = ['gpu'] }
+
+[tasks]
+test = 'python -m pytest'
+qc = 'methridgeqc qc'
+eval = 'methridgeqc eval'

@@ -1,0 +1,48 @@
+[build-system]
+requires = ['setuptools>=77.0.3']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'MethRidgeQC'
+dynamic = ['version']
+description = 'Independent strand cytosine count-based Ridge quality assessment'
+readme = 'README.md'
+license = 'MIT'
+license-files = ['LICENSE']
+authors = [{name = 'Zhang Yuanfeng'}]
+requires-python = '>=3.13,<3.14'
+keywords = ['methylation', 'CpG', 'quality-control', 'ridge-regression', 'bioinformatics']
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Science/Research',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: 3.13',
+    'Topic :: Scientific/Engineering :: Bio-Informatics',
+]
+dependencies = ['numpy', 'scipy', 'polars', 'pyarrow', 'scikit-learn', 'threadpoolctl']
+
+[project.optional-dependencies]
+gpu = ['cuml-cu13==26.10.*', 'rmm-cu13==26.10.*', 'cupy-cuda13x[ctk]>=14.0.1,<15,!=14.1.0']
+test = ['pytest']
+release = ['build', 'twine', 'wheel']
+
+[project.scripts]
+methridgeqc = 'methridgeqc.cli:main'
+
+[project.urls]
+Homepage = 'https://github.com/YuanfengZhang/MethRidgeQC'
+Repository = 'https://github.com/YuanfengZhang/MethRidgeQC'
+Issues = 'https://github.com/YuanfengZhang/MethRidgeQC/issues'
+Changelog = 'https://github.com/YuanfengZhang/MethRidgeQC/blob/main/CHANGELOG.md'
+
+[tool.setuptools.dynamic]
+version = {attr = 'methridgeqc.__version__'}
+
+[tool.setuptools.packages.find]
+where = ['src']
+include = ['methridgeqc', 'methridgeqc.*']
+namespaces = false
+
+[tool.pytest.ini_options]
+testpaths = ['tests']

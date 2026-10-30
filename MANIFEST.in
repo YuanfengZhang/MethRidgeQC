@@ -1,0 +1,13 @@
+include README.md CHANGELOG.md
+include pixi.toml pixi.lock
+include LICENSE
+recursive-include example *.fa *.fai *.parquet.lz4 *.md
+recursive-include tests *.py
+prune .pixi
+prune .work
+prune temp
+prune .pytest_cache
+prune build
+prune dist
+prune results
+global-exclude __pycache__ *.py[cod] .DS_Store
